@@ -6,7 +6,7 @@ import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 
 const Collection = () => {
-  const {products}=useContext(ShopContext);
+  const {products,search,showSearch}=useContext(ShopContext);
   const [showFilter,setShowFilter]=useState(false);
   const [filterProducts,setFilterProducts]=useState([]);
   const [category,setCategory]=useState([]);
@@ -28,7 +28,7 @@ const Collection = () => {
   }
 useEffect(()=>{
   applyFilter()
-},[category,subCategory])
+},[category,subCategory,search,showSearch])
 
 useEffect(()=>{
   sortProduct()
@@ -36,6 +36,9 @@ useEffect(()=>{
 
   const applyFilter=()=>{
     let productsCopy=products.slice();
+    if(showSearch && search){
+      productsCopy=productsCopy.filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
+    }
     if(category.length > 0){
       productsCopy=productsCopy.filter(product => category.includes(product.category))
     }
@@ -60,7 +63,7 @@ useEffect(()=>{
     }
   }
   return (
-    <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
+    <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t border-gray-300'>
      {/* {Filter Options} */}
      <div className='min-w-60'>
       <div onClick={() => setShowFilter(!showFilter)} className='my-2 text-xl flex items-center cursor-pointer gap-2'>
