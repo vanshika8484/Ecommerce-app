@@ -48,6 +48,12 @@ if(cartItems[items][item]>0){
     }
     return count;
    }
+
+   const updateQuantity = async (itemId, size, quantity) => {
+  let cartData = structuredClone(cartItems);
+  cartData[itemId][size] = quantity;
+  setCartItems(cartData);
+}
     const value = {
         products,
         currency,
@@ -58,7 +64,8 @@ if(cartItems[items][item]>0){
         setShowSearch,
         cartItems,
         addToCart,
-        getCartCount
+        getCartCount,
+        updateQuantity
     };
     return (
         <ShopContext.Provider value={value}>
